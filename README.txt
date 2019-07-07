@@ -1,3 +1,10 @@
+As a disclaimer, I suck at programming and hardware design and so cannot guarantee any of this will work for you
+It's a bit buggy and probably not written to any decent standard but it is what it is
+Will be adding a plastic enclosure at some point, probably 3D printed base with acrylic top.
+
+
+
+
 Idea is for a board with 2 rotary encoders, a slide pot and 16x2 LCD screen with PCF85741 i2c backpack used to control the windows 10 volume mixer program with hardware.
 Uses Atmega 168 with arduino bootloader (changed from esp8266) to run the board with PIC16f15323's reading the rotary encoders (Fattoresaimon's i2cencoder project, https://github.com/Fattoresaimon/i2cencoder). 
 AndreMiras's pycaw library used to control Windows volume mixer (https://github.com/AndreMiras/pycaw). 
@@ -58,13 +65,14 @@ Could possibly add PID recognition for programs, default to whatever name is alr
 
 Add play/pause, next, back buttons - Need to find python library to send windows keyboard commands
 
-Make a config file to have some settings in it for the program. Leave a default setting but maybe some adjustable parameters:
-	PID recognition as above
-	RBG lighting settings to send to board - how many, might need to get drivers i2c is too expensive
+Make a config file to have some settings in it for the program. Leave a default setting but maybe some adjustable parameters
+
+RBG lighting settings could be funny, need to figure out how to send to board 
+	How many lights, what type, might need to get drivers, i2c maybe too expensive, worth effort?, probably use config file
   
- Look at getting rid of i2c backpack on LCD to cut cost, have spare pins for it
+ Look at getting rid of i2c backpack on LCD to cut cost, have the spare pins for it off IC
  
- Does hardware debouncing work
+ Is current hardware debouncing good enough -- need to get into ece labs for oscills
  
- Fix PCB/schematic design errors
+ Fix PCB/schematic design errors -  it's just ugly
 	
