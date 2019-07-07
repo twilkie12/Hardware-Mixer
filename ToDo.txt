@@ -1,0 +1,4 @@
+Source dupont right angle 1x4 and 2x3 headers precut
+Config file and possibly send config information to board as part of initilisation
+Calibration of slide pot, button done, write code
+Look at changing usb connector

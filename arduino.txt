@@ -1,0 +1,370 @@
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+#include "i2cEncoderLib.h"
+
+ 
+/*
+To do:
+Add percent of volume display on LCD
+*/
+ 
+ 
+
+//All encoder setup
+#define ENCODER_N 2
+i2cEncoderLib encoder[ENCODER_N] = { i2cEncoderLib(0x3D), i2cEncoderLib(0x30)}; //Class initialization with the I2C addresses 
+
+uint8_t counter[ENCODER_N] = {0, 0}; 
+uint8_t maxvalue[ENCODER_N] = {100, 100};
+uint8_t minvalue[ENCODER_N] = {0, 0};
+
+int32_t econfig[ENCODER_N] = {
+  (INTE_DISABLE | LEDE_DISABLE | WRAP_DISABLE | DIRE_LEFT | IPUP_ENABLE | RMOD_X2),
+  (INTE_DISABLE | LEDE_DISABLE | WRAP_DISABLE | DIRE_LEFT | IPUP_ENABLE | RMOD_X2)
+  };
+  
+// These are currently unnecessary
+// const uint8_t Intpin_1 = 3;
+// const uint8_t Intpin_2 = 2;
+
+  
+// Screen object
+LiquidCrystal_I2C LCD_Screen(0x3F, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE); 
+
+
+// Serial communication variables
+const uint32_t baudRate = 115200;
+const char HANDSHAKE = '@';
+const char VolumeRequest = '^';
+const char ChangeMarker[2] = {'#', '$'};
+
+
+// Program names and volume values
+// Volumes 1, 2, master
+uint8_t Volumes[3] = {0, 0, 0};
+
+char *CurrName;
+char Name1[17];
+char Name2[17];
+ 
+uint16_t incoming;
+char data;
+
+const char VolumeBreak = '!';
+
+// Master slider settings
+const uint8_t Slider_Pin = A2;
+const uint16_t LowerBound = 2;
+const uint16_t UpperBound = 1022;
+
+
+void setup(void){
+	
+	for (uint8_t i = 0; i < ENCODER_N; i++) {
+		encoder[i].begin(econfig[i]);
+		encoder[i].writeCounter(counter[i]);
+		encoder[i].writeMax(maxvalue[i]);
+		encoder[i].writeMin(minvalue[i]);
+		encoder[i].updateStatus();
+	}
+  
+	Name1[16] = '\0'; // Setting termination characters on the arrays
+	Name2[16] = '\0';
+	
+	LCD_Screen.begin(16, 2);
+	LCD_Screen.backlight();
+	
+	Serial.begin(baudRate);
+	Serial.print(HANDSHAKE);
+	LCD_Screen.clear();
+	LCD_Screen.print("Waiting for PC");
+	LCD_Screen.setCursor(0, 1);
+	LCD_Screen.print("to start");
+	
+}
+
+
+void loop(){
+	
+	if (Serial.available()) {
+		
+		incoming = Serial.read();
+		data = char(incoming);
+		
+		if (data == VolumeRequest) {
+			
+			sendVolumes();
+			
+		}
+		
+		else if (data == HANDSHAKE) {
+			
+			Serial.print(HANDSHAKE);
+			
+		}
+		
+		else if (data == ChangeMarker[0]) {
+			
+			receiveName(0);
+			
+		}
+		
+		else if (data == ChangeMarker[1]) {
+			
+			receiveName(1);
+			
+		}
+		
+	}
+	
+	else if (encoder[0].updateStatus()) {
+		
+		readEncoder(0);
+		
+	}
+	
+	else if (encoder[1].updateStatus()) {
+		
+		readEncoder(1);
+		
+	}
+	
+}
+
+
+
+	
+/*
+Reads encoder ii and if the button is pressed or the volume has changed
+ii is 0 or 1
+Returns the volume change or if the button has been pushed, calls change program and returns nothing
+*/
+void readEncoder(uint8_t ii) {
+	
+		
+	if (encoder[ii].readStatus(E_PUSH)) { 
+	
+		changeProgram(ii);
+
+	}
+  
+	else {
+		
+		encoder[ii].readStatus();
+		Volumes[ii] = encoder[ii].readCounterByte();
+		
+	}
+	
+	return;
+}
+
+  
+/*  
+Tells PC to change program channel ii
+Called from ReadEncoder when button is pushed  
+Need the pc to confirm that it has received the marker to continue 
+*/
+void changeProgram(uint8_t ii) {
+	
+	//This is an awful way to do it but it works, different change marker for each channel
+	serialFlush();
+	Serial.print(ChangeMarker[ii]);
+	delay(2);
+	
+	bool Waiting = true;
+	  
+	while (Waiting){
+
+		if (Serial.available()){
+			
+			data = Serial.read();
+			
+			if (data == ChangeMarker[ii]){ // This is used by the PC to confirm that the change marker is received
+				receiveName(ii); // Captures the name followed by the same change marker to end
+				Waiting = false;
+				return;
+			}
+			
+			else if (data == VolumeRequest){
+				
+				Serial.print(ChangeMarker[ii]);
+			
+			}
+			
+			else if (data == HANDSHAKE){
+				
+				Serial.write(HANDSHAKE);
+				return;
+		}
+		else{
+			delayMicroseconds(1);
+		}
+	}
+		
+	return;
+	
+	}
+}
+
+
+/*
+Prints a list of all volumes to serial
+Starting with and seperated by ! - VolumeBreak
+Encoder 1, encoder 2 and then master
+*/
+void sendVolumes(void) {
+  
+	serialFlush();
+	Serial.print(VolumeBreak);
+	
+	uint16_t UnmappedVolume = analogRead(Slider_Pin);
+	
+	Volumes[2] = map(UnmappedVolume, LowerBound, UpperBound, 0, 100);
+	
+	for (uint8_t i = 0; i < 3; i++) {
+	  
+		Serial.print(Volumes[i]);
+		Serial.print(VolumeBreak);
+		
+	}
+	
+	return;
+}
+
+
+/*
+Reads the name of the new program from serial and prints it to the LCD
+Expects characters followed by the change marker again to signal the end of the name
+Needs to know which channel it is changing, 0 - first, 1 - second
+Will only take the first 16 characters
+Expects volume after the marker, finished ith VolumeBreak, then will flush serial
+*/
+void receiveName(uint8_t ii) {
+	
+	uint8_t i = 0;
+	
+	if (ii == 0){
+		CurrName = Name1;
+	}
+	
+	else if (ii == 1){
+		CurrName = Name2;
+	}
+	
+	
+	while (i < 16) {
+		
+		if (Serial.available()) {
+			
+			incoming = Serial.read();
+			data = char(incoming);
+	
+			if (data == ChangeMarker[ii]) {
+				
+				while (i < 16) {
+					CurrName[i] = ' ';
+					i++;
+
+				}
+			}
+			
+			else if (data == HANDSHAKE){
+				
+				Serial.print(HANDSHAKE);
+				return;
+				
+			}
+			
+			else {
+				
+				CurrName[i] = data;
+				i++;
+		
+			}	
+		}
+		
+		else {
+			
+			delayMicroseconds(1);
+		
+		}
+		
+
+	}
+	
+
+	// Prints the name in its position
+	LCD_Screen.setCursor(0, ii);
+	LCD_Screen.print(CurrName);
+	
+	// Now to get the volume
+	recieveVolume(ii);
+	
+	return;
+	
+}
+
+
+/*
+Takes in 0 or 1 and expects there to be a volume waiting in serial
+Expects <4 digits with VolumeBreak at the end
+Converts to int and writes directly into the Volumes array
+*/
+void recieveVolume(uint8_t ii) {
+	
+	uint8_t i = 0;
+	bool HaveVolume = false;
+	char VolumeCollect[3];
+	
+	while (HaveVolume == false) {
+		
+		if (Serial.available()) {
+			
+			incoming = Serial.read();
+			data = char(incoming);
+
+			if (data == VolumeBreak || i >=3) {
+
+				HaveVolume = true;
+				
+			}
+			else if (data == HANDSHAKE){
+				
+				Serial.print(HANDSHAKE);
+				return;
+				
+			}
+			
+			
+			else {
+				
+				VolumeCollect[i] = data;
+				i++;
+				
+			}	
+			
+		}
+		
+	}
+	
+	uint8_t intvol = atoi(VolumeCollect);
+	
+	Volumes[ii] = intvol;
+	encoder[ii].writeCounter(intvol);
+	
+	return;
+}
+
+
+/* 
+Does exactly what you'd expect
+*/
+void serialFlush(void){
+  while (Serial.available() > 0) {
+    Serial.read();
+  }
+  return;
+}
+
+
+

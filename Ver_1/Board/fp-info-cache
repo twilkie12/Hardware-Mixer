@@ -1,0 +1,99 @@
+21844854348520
+Part_footprints
+C_1206_3216Metric
+Capacitor SMD 1206 (3216 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf), generated with kicad-footprint-generator
+capacitor
+0
+2
+2
+Part_footprints
+HC49S_SMD_Crystal
+
+
+0
+2
+2
+Part_footprints
+LED_1206_3216Metric
+LED SMD 1206 (3216 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf), generated with kicad-footprint-generator
+diode
+0
+2
+2
+Part_footprints
+Micro_B_SMD_G19
+
+
+0
+11
+5
+Part_footprints
+PinHeader_1x04_P2.54mm_Horizontal
+Through hole angled pin header, 1x04, 2.54mm pitch, 6mm pin length, single row
+Through hole angled pin header THT 1x04 2.54mm single row
+0
+4
+4
+Part_footprints
+PinHeader_1x08_P2.54mm_Horizontal
+Through hole angled pin header, 1x08, 2.54mm pitch, 6mm pin length, single row
+Through hole angled pin header THT 1x08 2.54mm single row
+0
+8
+8
+Part_footprints
+PinHeader_2x03_P2.54mm_Vertical
+Through hole straight pin header, 2x03, 2.54mm pitch, double rows
+Through hole pin header THT 2x03 2.54mm double row
+0
+6
+6
+Part_footprints
+Right_angle_momentary_button
+
+
+0
+4
+2
+Part_footprints
+RotaryEncoder_Alps_EC11E-Switch_Vertical_H20mm
+Alps rotary encoder, EC12E... with switch, vertical shaft, http://www.alps.com/prod/info/E/HTML/Encoder/Incremental/EC11/EC11E15204A3.html
+rotary encoder
+0
+5
+5
+Part_footprints
+R_1206_3216Metric
+Resistor SMD 1206 (3216 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf), generated with kicad-footprint-generator
+resistor
+0
+2
+2
+Part_footprints
+Slide_potentiometer_Behringer
+
+
+0
+6
+3
+Part_footprints
+SOIC-14_3.9x8.7mm_P1.27mm
+SOIC, 14 Pin (JEDEC MS-012AB, https://www.analog.com/media/en/package-pcb-resources/package/pkg_pdf/soic_narrow-r/r_14.pdf), generated with kicad-footprint-generator ipc_gullwing_generator.py
+SOIC SO
+0
+14
+14
+Part_footprints
+SOP-16_150MIL
+
+
+0
+16
+16
+Part_footprints
+TQFP-32_7x7mm_P0.8mm
+32-Lead Plastic Thin Quad Flatpack (PT) - 7x7x1.0 mm Body, 2.00 mm [TQFP] (see Microchip Packaging Specification 00000049BS.pdf)
+QFP 0.8
+0
+32
+32
