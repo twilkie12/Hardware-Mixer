@@ -1,4 +1,4 @@
-As a disclaimer, I suck at programming and hardware design and so cannot guarantee any of this will work for you
+As a disclaimer, I am an amateur at programming and hardware design and so cannot guarantee any of this will work for you
 It's a bit buggy and probably not written to any decent standard but it is what it is
 Will be adding a plastic enclosure at some point, probably 3D printed base with acrylic top.
 
