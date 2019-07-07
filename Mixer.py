@@ -11,6 +11,8 @@ from pycaw.pycaw import ISimpleAudioVolume, AudioUtilities, IAudioEndpointVolume
 To do:
 Figure out protected memory error
 Serial comtype breaks occasionally
+How does logging library even work 
+e.args -- lachlan?
 '''
 
 # Error logging
