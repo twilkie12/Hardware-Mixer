@@ -77,7 +77,8 @@ Pressing reset on board takes a significant amount of time for the computer to r
 Could possibly add PID recognition for programs, default to whatever name is already there but for some programs maybe have a list of
 PIDS with names the user wants to have used, ie windows systems sounds can be void, "windowsshellexperience" or "Explorer" depending on
 how windows feels on that day a list of known pids with their custom names could be made and edited by the user
-Probably should check if program PID's are static or dynamic
+Probably should check if program PID's are static or dynamic - it's dynamic, use Process.exe()? 
+Process is psutil object
 
 Could add play/pause, next, back buttons - Need to find python library to send windows keyboard commands and decide on how to send those/what markers
 
