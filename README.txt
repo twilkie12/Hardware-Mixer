@@ -1,7 +1,7 @@
 As a disclaimer, I am an amateur at programming and hardware design and so cannot guarantee any of this will work for you.
 It's a bit buggy and probably not written to any decent standard but it is what it is.
 Will be adding a plastic enclosure at some point, probably 3D printed base with acrylic top.
-Ask nicely and I can send you a PCB for cost + shipping, ostensibly to test but any help adding to or fixing things would be appreciated.
+Ask and I can send you a PCB for cost + shipping, ostensibly to test but no obligation to do so however any help adding to or fixing things would be appreciated.
 
 
 
@@ -60,8 +60,8 @@ New pointer is being defined and put into memory every time it checks for change
 
 
 
-The serial com object sometimes has errors, need to find the error message but something about Vtable lookup, rare and also fixed on
-fresh windows install
+The serial com object sometimes has errors, need to find the error message but something about Vtable lookup, rare and also seemingly
+fixed on fresh windows install
 
 Prints: (-2004287484, None, (None, None, None, 0, None))
 Need to figure out where from and why
@@ -69,24 +69,25 @@ Need to figure out where from and why
 Occasionally PC doesn't decode serial input, not a big deal it tends to just ignore it
 
 The atmega sometimes gets stuck in a send and will stop working and just be recieving constant request markers from the PC which 
-will then write to the screen
+will then write to the screen -- fixed with a timeout kind of thing
 
 Pressing reset on board takes a significant amount of time for the computer to realise and re-initilize -- Fixed?
 
 
 Could possibly add PID recognition for programs, default to whatever name is already there but for some programs maybe have a list of
 PIDS with names the user wants to have used, ie windows systems sounds can be void, "windowsshellexperience" or "Explorer" depending on
-how windows feels on that day
+how windows feels on that day a list of known pids with their custom names could be made and edited by the user
+Probably should check if program PID's are static or dynamic
 
-
-Add play/pause, next, back buttons - Need to find python library to send windows keyboard commands
+Could add play/pause, next, back buttons - Need to find python library to send windows keyboard commands and decide on how to send those/what markers
 
 Make a config file to have some settings in it for the program. Leave a default setting but maybe some adjustable parameters
 
 RBG lighting settings could be funny, need to figure out how to send to board 
 	How many lights, what type, might need to get drivers, i2c maybe too expensive, worth effort?, probably use config file
   
- Look at getting rid of i2c backpack on LCD to cut cost, have the spare pins for it off IC
+ Look at getting rid of i2c backpack on LCD to cut cost, have the spare pins for it off IC and it might speed everything up although 
+ that hasn't been a problem yet even with the slow atmega168
  
  Is current hardware debouncing good enough -- need to get into ece labs for oscills
  
