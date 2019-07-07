@@ -36,7 +36,8 @@ Traceback (most recent call last):
     return self.__com_Release()
 OSError: exception: access violation writing 0x00000000
 
-Seems to be some sort of issue with the ctypes attempting to write to protected memory addresses
+Seems to be some sort of issue with the ctypes attempting to write to protected memory addresses.
+New pointer is being defined and put into memory every time it checks for change in sessions or change in endpoint
 
 
 
