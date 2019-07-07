@@ -28,6 +28,7 @@ Uses CH340B USB-Serial chip for it's EEPROM to allow python script to recognise 
 
 To do:
 
+Add mounting holes to PCB
 Source dupont right angle 1x4 and 2x3 headers precut - possibly have 2x3 but in bulk only
 Config file and possibly send config information to board as part of initilisation
 Calibration of slide pot, button done, write code
