@@ -45,9 +45,11 @@ The serial com object sometimes has errors, need to find the error message but s
 Prints: (-2004287484, None, (None, None, None, 0, None))
 Need to figure out where from and why
 
+Occasionally PC doesn't decode serial input, not a big deal it tends to just ignore it
+
 The atmega sometimes gets stuck in a send and will stop working and just be recieving constant request markers from the PC which will then write to the screen
 
-Pressing reset on board takes a significant amount of time for the computer to realise and re-initilize
+Pressing reset on board takes a significant amount of time for the computer to realise and re-initilize -- Fixed?
 
 
 Could possibly add PID recognition for programs, default to whatever name is already there but for some programs maybe have a list of PIDS with names the user wants to have used, ie windows systems sounds can be void, "windowsshellexperience" or "Explorer" depending on how windows feels on that day
