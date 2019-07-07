@@ -1,12 +1,16 @@
-As a disclaimer, I am an amateur at programming and hardware design and so cannot guarantee any of this will work for you
-It's a bit buggy and probably not written to any decent standard but it is what it is
+As a disclaimer, I am an amateur at programming and hardware design and so cannot guarantee any of this will work for you.
+It's a bit buggy and probably not written to any decent standard but it is what it is.
 Will be adding a plastic enclosure at some point, probably 3D printed base with acrylic top.
+Ask nicely and I can send you a PCB for cost + shipping, ostensibly to test but any help adding to or fixing things would be appreciated.
 
 
 
+Idea is for a board with 2 rotary encoders (tried pots, didn't really work), a slide pot and 16x2 LCD screen with PCF85741 i2c backpack
+used to control the windows 10 volume mixer program with hardware.
 
-Idea is for a board with 2 rotary encoders, a slide pot and 16x2 LCD screen with PCF85741 i2c backpack used to control the windows 10
-volume mixer program with hardware.
+Controls 2 programs volume at a time, with the name of the active programs given on the LCD screen and the active programs changed by
+pressing the rotary encoder button. Master volume is controlled by slider.
+
 
 Uses Atmega 168 with arduino bootloader (changed from esp8266) to run the board with PIC16f15323's reading the rotary encoders
 (Fattoresaimon's i2cencoder project, https://github.com/Fattoresaimon/i2cencoder). 
