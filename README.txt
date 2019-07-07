@@ -5,10 +5,17 @@ Will be adding a plastic enclosure at some point, probably 3D printed base with 
 
 
 
-Idea is for a board with 2 rotary encoders, a slide pot and 16x2 LCD screen with PCF85741 i2c backpack used to control the windows 10 volume mixer program with hardware.
-Uses Atmega 168 with arduino bootloader (changed from esp8266) to run the board with PIC16f15323's reading the rotary encoders (Fattoresaimon's i2cencoder project, https://github.com/Fattoresaimon/i2cencoder). 
+Idea is for a board with 2 rotary encoders, a slide pot and 16x2 LCD screen with PCF85741 i2c backpack used to control the windows 10
+volume mixer program with hardware.
+
+Uses Atmega 168 with arduino bootloader (changed from esp8266) to run the board with PIC16f15323's reading the rotary encoders
+(Fattoresaimon's i2cencoder project, https://github.com/Fattoresaimon/i2cencoder). 
+
 AndreMiras's pycaw library used to control Windows volume mixer (https://github.com/AndreMiras/pycaw). 
-Francisco Malpartida's i2cliquidcrystal library for arduino (https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/Home) (Need to make sure you have the right one as there are quite a few libraries with the same names with slightly different implementations)
+
+Francisco Malpartida's i2cliquidcrystal library for arduino (https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/Home) 
+(Need to make sure you have the right one as there are quite a few libraries with the same names with slightly different implementations)
+
 Uses CH340B USB-Serial chip for it's EEPROM to allow python script to recognise board (http://www.wch.cn/products/CH340.html).
 
 
@@ -48,19 +55,23 @@ New pointer is being defined and put into memory every time it checks for change
 
 
 
-The serial com object sometimes has errors, need to find the error message but something about Vtable lookup, rare and also fixed on fresh windows install
+The serial com object sometimes has errors, need to find the error message but something about Vtable lookup, rare and also fixed on
+fresh windows install
 
 Prints: (-2004287484, None, (None, None, None, 0, None))
 Need to figure out where from and why
 
 Occasionally PC doesn't decode serial input, not a big deal it tends to just ignore it
 
-The atmega sometimes gets stuck in a send and will stop working and just be recieving constant request markers from the PC which will then write to the screen
+The atmega sometimes gets stuck in a send and will stop working and just be recieving constant request markers from the PC which 
+will then write to the screen
 
 Pressing reset on board takes a significant amount of time for the computer to realise and re-initilize -- Fixed?
 
 
-Could possibly add PID recognition for programs, default to whatever name is already there but for some programs maybe have a list of PIDS with names the user wants to have used, ie windows systems sounds can be void, "windowsshellexperience" or "Explorer" depending on how windows feels on that day
+Could possibly add PID recognition for programs, default to whatever name is already there but for some programs maybe have a list of
+PIDS with names the user wants to have used, ie windows systems sounds can be void, "windowsshellexperience" or "Explorer" depending on
+how windows feels on that day
 
 
 Add play/pause, next, back buttons - Need to find python library to send windows keyboard commands
