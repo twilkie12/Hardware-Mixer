@@ -28,14 +28,25 @@ Uses CH340B USB-Serial chip for it's EEPROM to allow python script to recognise 
 
 To do:
 
-Add mounting holes to PCB
-Source dupont right angle 1x4 and 2x3 headers precut - possibly have 2x3 but in bulk only
-Config file and possibly send config information to board as part of initilisation
-Calibration of slide pot, button done, write code
-Look at changing usb connector to something stronger then micro b
-Finalise case material and design.
+Biggest thing is to make LCD mount on the pcb directly rather then through floating
+Remove i2c backpack and just communicate directly using pins on LCD will reduce cost and hassle
+This should reduce footprint and required height of the case as well as look neater with no cables inside casing
+Also could make backlight/contrast easily adjustable via mounted pots on PCB
 
-Python code does everything decently well
+Add mounting holes to PCB
+Adjust footprint of 6 pin ISP header to show pin 1
+Change names on breakout header to say the pin number it is connected to
+Put in solder jumpers to turn enable/disable power and data transmission indicator LED's
+Label reset and calibration buttons 
+
+
+Source dupont right angle 1x4 and 2x3 headers precut - possibly have 2x3 but in bulk only --Done-ish
+Config file and possibly send config information to board as part of initilisation
+Calibration of slide pot, button done, need to write code
+Look at possibly changing usb connector to something stronger then micro b
+Finalise case material and design - Clear acrylic laser cut top plate need to decide on bottom half
+
+Python code does everything decently well, need to look at getting a lib for windows media buttons
 
 Errors to solve/fix:
 
@@ -77,8 +88,10 @@ Pressing reset on board takes a significant amount of time for the computer to r
 Could possibly add PID recognition for programs, default to whatever name is already there but for some programs maybe have a list of
 PIDS with names the user wants to have used, ie windows systems sounds can be void, "windowsshellexperience" or "Explorer" depending on
 how windows feels on that day a list of known pids with their custom names could be made and edited by the user
-Probably should check if program PID's are static or dynamic - it's dynamic, use Process.exe()? 
+Probably should check if program PID's are static or dynamic 
 Process is psutil object
+	--PID is dynamic but can look up the Process.exe() to see the file for the sound stream, that should be stable
+
 
 Could add play/pause, next, back buttons - Need to find python library to send windows keyboard commands and decide on how to send those/what markers
 
@@ -86,9 +99,10 @@ Make a config file to have some settings in it for the program. Leave a default 
 
 RBG lighting settings could be funny, need to figure out how to send to board 
 	How many lights, what type, might need to get drivers, i2c maybe too expensive, worth effort?, probably use config file
+		-- Lots of spare PWM pins off IC
   
  Look at getting rid of i2c backpack on LCD to cut cost, have the spare pins for it off IC and it might speed everything up although 
- that hasn't been a problem yet even with the slow atmega168
+ that hasn't been a noticable problem yet even with only 16MHz atmega168
  
  Is current hardware debouncing good enough -- need to get into ece labs for oscills
  
