@@ -19,9 +19,11 @@ If you decide to get the PCB manufactured yourself and put it all together yours
 	- The python script looks for a specific serial number on a USB device and then trys to connect to that. You will need to use
 	  a CH340B as this is allows you to change the EEPROM and write the serial number to the chip. The software and drivers to
 	  do this and use CH340 chips are ahead but I will say that while the drivers are from the manufactuers site the CFG program is
-	  not; and I really, really cannot condone downloading a random .exe from unknown sources, despite doing it myself.
+	  not, with the most official looking download being from the WCH forum; and I really cannot condone downloading a random .rar
+	  from unknown sources. I have not downloaded the CFG from this source instead I initially found it only on a random chinese
+	  filehosting site which is probably even worse.
 	  (Drivers: http://www.wch.cn/download/CH341SER_EXE.html, and the program used to configure the EEPROM:
-	  http://www.liangchan.net/liangchan/10017.html -- Called CH340CFG, there are multiple sources available through google). 
+	  http://wch.cn/index.php/bbs/thread-64449-2.html -- Called CH340CFG, there are multiple sources available through google). 
 	- As a warning you ONLY want to change the serial number on the chipe, changing VID, or PID WILL make the drivers stop working
 	  until you manually reassign the driver to the device, not recommended if you do not know your way around your PC.
 	- You will need an Arduino, USBasp or similar to burn the Arduino bootloader to the ATMEGA 168 with Arduino IDE as well as 
